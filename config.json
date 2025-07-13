@@ -1,0 +1,66 @@
+{
+  "app": {
+    "name": "MailMaster",
+    "version": "1.0.0",
+    "description": "AI-Powered Email Assistant with GPT-4 & Tavily AI"
+  },
+  "apis": {
+    "openai": {
+      "baseUrl": "https://api.openai.com/v1",
+      "model": "gpt-4o-mini",
+      "maxTokens": {
+        "email": 800,
+        "reply": 600,
+        "sentiment": 500
+      },
+      "temperature": 0.7
+    },
+    "tavily": {
+      "baseUrl": "https://api.tavily.com",
+      "maxResults": 5,
+      "searchDepth": {
+        "basic": "basic",
+        "advanced": "advanced"
+      }
+    }
+  },
+  "features": {
+    "languages": [
+      {"code": "en", "name": "English"},
+      {"code": "es", "name": "Spanish"},
+      {"code": "fr", "name": "French"},
+      {"code": "de", "name": "German"},
+      {"code": "it", "name": "Italian"},
+      {"code": "pt", "name": "Portuguese"},
+      {"code": "zh", "name": "Chinese"},
+      {"code": "ja", "name": "Japanese"}
+    ],
+    "tones": {
+      "compose": ["professional", "casual", "formal", "friendly", "empathetic"],
+      "reply": ["professional", "apologetic", "appreciative", "assertive", "empathetic"]
+    },
+    "priorities": {
+      "high": {"min": 8, "color": "#dc3545"},
+      "medium": {"min": 5, "color": "#ffc107"},
+      "low": {"min": 0, "color": "#28a745"}
+    }
+  },
+  "defaults": {
+    "tone": "professional",
+    "language": "en",
+    "signature": "Best regards,\n[Your Name]",
+    "autoResearch": false,
+    "autoFollowup": true,
+    "spamFilter": true,
+    "smartContext": true
+  },
+  "ui": {
+    "notifications": {
+      "duration": 4000,
+      "position": "top-right"
+    },
+    "loading": {
+      "minDisplayTime": 1000
+    }
+  }
+}

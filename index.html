@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MailMaster - AI Email Assistant</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        .header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            animation: slideUp 0.8s ease-out 0.2s both;
+        }
+
+        @media (max-width: 968px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+
+        .card h2 {
+            color: #2a5298;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #555;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #2a5298;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255,255,255,0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #2a5298 0%, #1e3c72 100%);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
+            color: white;
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #28a745 0%, #1e7e34 100%);
+            color: white;
+        }
+
+        .output-section {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border: 2px solid #e0e0e0;
+            min-height: 200px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .output-section h3 {
+            color: #2a5298;
+            margin-bottom: 15px;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .loading.active {
+            display: block;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #2a5298;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .tone-selector {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+
+        .tone-option {
+            padding: 8px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .tone-option:hover {
+            border-color: #2a5298;
+            background: #f0f4ff;
+        }
+
+        .tone-option.selected {
+            background: #2a5298;
+            color: white;
+            border-color: #2a5298;
+        }
+
+        .sentiment-indicator {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+
+        .sentiment-positive {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .sentiment-negative {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .sentiment-neutral {
+            background: #e2e3e5;
+            color: #383d41;
+        }
+
+        .feature-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            color: #666;
+        }
+
+        .tab:hover {
+            color: #2a5298;
+        }
+
+        .tab.active {
+            color: #2a5298;
+            border-bottom-color: #2a5298;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .email-preview {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .email-preview .email-header {
+            border-bottom: 1px solid #e0e0e0;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+
+        .email-preview .email-field {
+            margin-bottom: 8px;
+            color: #666;
+        }
+
+        .email-preview .email-field strong {
+            color: #333;
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 25px;
+            background: #28a745;
+            color: white;
+            border-radius: 8px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification.error {
+            background: #dc3545;
+        }
+
+        .priority-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+
+        .priority-high {
+            background: #dc3545;
+            animation: pulse 1.5s infinite;
+        }
+
+        .priority-medium {
+            background: #ffc107;
+        }
+
+        .priority-low {
+            background: #28a745;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(220, 53, 69, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(220, 53, 69, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(220, 53, 69, 0);
+            }
+        }
+
+        .api-config {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+            color: #856404;
+        }
+
+        .api-config h3 {
+            margin-bottom: 10px;
+            color: #856404;
+        }
+
+        .api-config .form-group {
+            margin-bottom: 10px;
+        }
+
+        .api-config input {
+            font-family: monospace;
+            background: #fff;
+        }
+
+        .context-section {
+            background: #e7f3ff;
+            border: 1px solid #b3d9ff;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .context-section h4 {
+            color: #0056b3;
+            margin-bottom: 10px;
+        }
+
+        .research-results {
+            background: #f8f9fa;
+            border-left: 4px solid #2a5298;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .research-results h5 {
+            color: #2a5298;
+            margin-bottom: 8px;
+        }
+
+        .research-results p {
+            font-size: 14px;
+            line-height: 1.4;
+            margin-bottom: 8px;
+        }
+
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            border: 1px solid #f5c6cb;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📧 MailMaster</h1>
+            <p>AI-Powered Email Assistant with GPT-4 & Tavily AI</p>
+        </div>
+
+        <div class="notification" id="notification"></div>
+
+        <div class="main-content">
+            <!-- Email Creation Section -->
+            <div class="card">
+                <h2>✍️ Create Email</h2>
+                
+                <div class="feature-tabs">
+                    <div class="tab active" onclick="switchTab('compose')">Compose</div>
+                    <div class="tab" onclick="switchTab('reply')">Reply</div>
+                    <div class="tab" onclick="switchTab('research')">Research</div>
+                    <div class="tab" onclick="switchTab('settings')">Settings</div>
+                </div>
+
+                <!-- Compose Tab -->
+                <div id="compose-tab" class="tab-content active">
+                    <form id="email-form">
+                        <div class="form-group">
+                            <label for="subject">Subject</label>
+                            <input type="text" id="subject" placeholder="e.g., Meeting Reminder" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="recipient">Recipient(s)</label>
+                            <input type="email" id="recipient" placeholder="e.g., john.doe@example.com" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="key-points">Key Points</label>
+                            <textarea id="key-points" placeholder="e.g., Reminder about meeting at 3 PM tomorrow. Please confirm attendance." required></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="context">Additional Context (Optional)</label>
+                            <textarea id="context" placeholder="Any background information, company details, or specific requirements..."></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="tone">Tone</label>
+                            <div class="tone-selector">
+                                <div class="tone-option selected" data-tone="professional">Professional</div>
+                                <div class="tone-option" data-tone="casual">Casual</div>
+                                <div class="tone-option" data-tone="formal">Formal</div>
+                                <div class="tone-option" data-tone="friendly">Friendly</div>
+                                <div class="tone-option" data-tone="empathetic">Empathetic</div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="language">Language</label>
+                            <select id="language">
+                                <option value="en">English</option>
+                                <option value="es">Spanish</option>
+                                <option value="fr">French</option>
+                                <option value="de">German</option>
+                                <option value="it">Italian</option>
+                                <option value="pt">Portuguese</option>
+                                <option value="zh">Chinese</option>
+                                <option value="ja">Japanese</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" id="auto-research">
+                                Enable automatic research for context enhancement
+                            </label>
+                        </div>
+
+                        <div class="button-group">
+                            <button type="submit" class="btn btn-primary">Generate Email</button>
+                            <button type="button" class="btn btn-secondary" onclick="clearForm()">Clear</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Reply Tab -->
+                <div id="reply-tab" class="tab-content">
+                    <form id="reply-form">
+                        <div class="form-group">
+                            <label for="original-email">Original Email</label>
+                            <textarea id="original-email" placeholder="Paste the email you want to reply to here..." required></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="reply-points">Key Points for Reply (Optional)</label>
+                            <textarea id="reply-points" placeholder="Any specific points you want to include in the reply..."></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Reply Tone</label>
+                            <div class="tone-selector" id="reply-tone-selector">
+                                <div class="tone-option selected" data-tone="professional">Professional</div>
+                                <div class="tone-option" data-tone="apologetic">Apologetic</div>
+                                <div class="tone-option" data-tone="appreciative">Appreciative</div>
+                                <div class="tone-option" data-tone="assertive">Assertive</div>
+                                <div class="tone-option" data-tone="empathetic">Empathetic</div>
+                            </div>
+                        </div>
+
+                        <div class="button-group">
+                            <button type="submit" class="btn btn-primary">Generate Reply</button>
+                            <button type="button" class="btn btn-secondary" onclick="analyzeSentiment()">Analyze Sentiment</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Research Tab -->
+                <div id="research-tab" class="tab-content">
+                    <div class="context-section">
+                        <h4>🔍 AI Research Assistant</h4>
+                        <p>Use Tavily AI to research topics and enhance your email context.</p>
+                    </div>
+
+                    <form id="research-form">
+                        <div class="form-group">
+                            <label for="research-query">Research Query</label>
+                            <input type="text" id="research-query" placeholder="e.g., latest trends in renewable energy" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="research-depth">Research Depth</label>
+                            <select id="research-depth">
+                                <option value="basic">Basic - Quick overview</option>
+                                <option value="advanced" selected>Advanced - Detailed analysis</option>
+                            </select>
+                        </div>
+
+                        <div class="button-group">
+                            <button type="submit" class="btn btn-primary">🔍 Research</button>
+                            <button type="button" class="btn btn-secondary" onclick="clearResearch()">Clear</button>
+                        </div>
+                    </form>
+
+                    <div id="research-results-container" style="margin-top: 20px;"></div>
+                </div>
+
+                <!-- Settings Tab -->
+                <div id="settings-tab" class="tab-content">
+                    <div class="api-config">
+                        <h3>⚙️ API Configuration</h3>
+                        <p style="margin-bottom: 15px; font-size: 14px;">
+                            <strong>Status:</strong> <span id="api-status">❌ Please configure API keys</span>
+                        </p>
+                        <div class="form-group">
+                            <label for="openai-key">OpenAI API Key</label>
+                            <input type="password" id="openai-key" placeholder="sk-..." value="">
+                        </div>
+                        <div class="form-group">
+                            <label for="tavily-key">Tavily API Key</label>
+                            <input type="password" id="tavily-key" placeholder="tvly-..." value="">
+                        </div>
+                        <button class="btn btn-success" onclick="saveApiKeys()">Save Keys</button>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="signature">Email Signature</label>
+                        <textarea id="signature" placeholder="Best regards,&#10;Your Name">Best regards,
+[Your Name]</textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="sender-name">Your Name</label>
+                        <input type="text" id="sender-name" placeholder="Your full name">
+                    </div>
+
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="auto-followup" checked>
+                            Enable automatic follow-up reminders
+                        </label>
+                    </div>
+
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="spam-filter" checked>
+                            Enable spam detection
+                        </label>
+                    </div>
+
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="smart-context" checked>
+                            Enable smart context enhancement
+                        </label>
+                    </div>
+
+                    <button class="btn btn-primary" onclick="saveSettings()">Save Settings</button>
+                </div>
+            </div>
+
+            <!-- Output Section -->
+            <div class="card">
+                <h2>📤 Generated Output</h2>
+                
+                <div class="output-section" id="output-section">
+                    <div class="loading" id="loading">
+                        <div class="spinner"></div>
+                        <p>Generating with AI...</p>
+                    </div>
+                    
+                    <div id="output-content">
+                        <p style="color: #999; text-align: center; padding: 40px;">
+                            Your generated email will appear here...
+                        </p>
+                    </div>
+                </div>
+
+                <div class="button-group" id="output-actions" style="display: none;">
+                    <button class="btn btn-success" onclick="copyToClipboard()">📋 Copy</button>
+                    <button class="btn btn-primary" onclick="openEmailClient()">📨 Open in Email</button>
+                    <button class="btn btn-secondary" onclick="regenerate()">🔄 Regenerate</button>
+                </div>
+
+                <!-- Sentiment Analysis Result -->
+                <div id="sentiment-result" style="margin-top: 20px; display: none;">
+                    <h3>📊 Sentiment Analysis</h3>
+                    <div class="email-preview">
+                        <p id="sentiment-text"></p>
+                    </div>
+                </div>
+
+                <!-- Research Context Display -->
+                <div id="research-context" style="margin-top: 20px; display: none;">
+                    <h3>🔍 Research Context</h3>
+                    <div id="research-context-content"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/mailmaster.js"></script>
+</body>
+</html>

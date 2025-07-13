@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MailMaster - Demo Examples</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f8f9fa;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 40px;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            border-radius: 15px;
+        }
+        
+        .demo-section {
+            background: white;
+            margin: 30px 0;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        
+        .demo-section h2 {
+            color: #2a5298;
+            border-bottom: 2px solid #e9ecef;
+            padding-bottom: 10px;
+        }
+        
+        .example-card {
+            background: #f8f9fa;
+            border-left: 4px solid #2a5298;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .example-card h4 {
+            color: #2a5298;
+            margin-bottom: 10px;
+        }
+        
+        .input-output {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .input, .output {
+            padding: 15px;
+            border-radius: 8px;
+        }
+        
+        .input {
+            background: #e7f3ff;
+            border: 1px solid #b3d9ff;
+        }
+        
+        .output {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .input h5, .output h5 {
+            margin-top: 0;
+            color: #495057;
+        }
+        
+        code {
+            background: #e9ecef;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .feature-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .feature-item {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #e9ecef;
+            text-align: center;
+        }
+        
+        .feature-item h3 {
+            color: #2a5298;
+            margin-bottom: 15px;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #2a5298 0%, #1e3c72 100%);
+            color: white;
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            margin: 20px 10px;
+            transition: transform 0.3s ease;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-2px);
+            color: white;
+            text-decoration: none;
+        }
+        
+        @media (max-width: 768px) {
+            .input-output {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>📧 MailMaster Demo</h1>
+        <p>See MailMaster in action with real examples of AI-powered email generation</p>
+        <a href="index.html" class="cta-button">Try MailMaster Now</a>
+    </div>
+
+    <div class="demo-section">
+        <h2>🎯 Key Features Overview</h2>
+        <div class="feature-list">
+            <div class="feature-item">
+                <h3>🤖 AI Email Generation</h3>
+                <p>Generate professional emails using OpenAI GPT-4o-mini with customizable tones and languages</p>
+            </div>
+            <div class="feature-item">
+                <h3>🔍 Research Integration</h3>
+                <p>Enhance emails with real-time research using Tavily AI for accurate, up-to-date information</p>
+            </div>
+            <div class="feature-item">
+                <h3>📊 Sentiment Analysis</h3>
+                <p>Analyze incoming emails for sentiment, urgency, and emotional tone to craft appropriate responses</p>
+            </div>
+            <div class="feature-item">
+                <h3>🌍 Multi-Language</h3>
+                <p>Generate emails in 8 languages with native-level fluency and cultural awareness</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="demo-section">
+        <h2>📝 Email Generation Examples</h2>
+        
+        <div class="example-card">
+            <h4>Example 1: Professional Meeting Request</h4>
+            <div class="input-output">
+                <div class="input">
+                    <h5>📥 User Input:</h5>
+                    <p><strong>Subject:</strong> Meeting Request - Q4 Strategy Discussion</p>
+                    <p><strong>Recipient:</strong> sarah.johnson@company.com</p>
+                    <p><strong>Key Points:</strong> Need to discuss Q4 marketing strategy, budget allocation, and timeline for new product launch</p>
+                    <p><strong>Tone:</strong> Professional</p>
+                </div>
+                <div class="output">
+                    <h5>📤 AI Generated Email:</h5>
+                    <p><strong>Subject:</strong> Meeting Request - Q4 Strategy Discussion</p>
+                    <p>Dear Sarah,</p>
+                    <p>I hope this email finds you well. I would like to schedule a meeting to discuss our Q4 marketing strategy and ensure we're aligned on our upcoming initiatives.</p>
+                    <p>During this meeting, I'd like to cover:</p>
+                    <ul>
+                        <li>Q4 marketing strategy review and refinement</li>
+                        <li>Budget allocation for the quarter</li>
+                        <li>Timeline and milestones for our new product launch</li>
+                    </ul>
+                    <p>Please let me know your availability for next week, and I'll send out a calendar invitation.</p>
+                    <p>Best regards,<br>[Your Name]</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="example-card">
+            <h4>Example 2: Customer Support Response</h4>
+            <div class="input-output">
+                <div class="input">
+                    <h5>📥 User Input:</h5>
+                    <p><strong>Reply to:</strong> Customer complaint about delayed shipment</p>
+                    <p><strong>Points:</strong> Apologize for delay, explain logistics issues, offer compensation</p>
+                    <p><strong>Tone:</strong> Empathetic</p>
+                </div>
+                <div class="output">
+                    <h5>📤 AI Generated Reply:</h5>
+                    <p><strong>Subject:</strong> Re: Delayed Shipment - Our Sincere Apologies</p>
+                    <p>Dear [Customer Name],</p>
+                    <p>Thank you for reaching out, and I sincerely apologize for the delay in your shipment. I completely understand your frustration, and I want to make this right.</p>
+                    <p>Due to unexpected logistics challenges in our fulfillment center, your order has experienced a delay. We've immediately escalated your shipment to priority status and expect it to arrive within the next 2 business days.</p>
+                    <p>As an apology for this inconvenience, we'd like to offer you a 20% discount on your next order and complimentary expedited shipping.</p>
+                    <p>Please don't hesitate to reach out if you have any other concerns. Your satisfaction is our top priority.</p>
+                    <p>Warmly,<br>[Your Name]<br>Customer Success Team</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="demo-section">
+        <h2>🔍 Research-Enhanced Email Example</h2>
+        
+        <div class="example-card">
+            <h4>Email with Automatic Research Integration</h4>
+            <div class="input-output">
+                <div class="input">
+                    <h5>📥 User Input:</h5>
+                    <p><strong>Subject:</strong> Renewable Energy Investment Proposal</p>
+                    <p><strong>Context:</strong> Solar energy market trends and opportunities</p>
+                    <p><strong>Auto-Research:</strong> ✅ Enabled</p>
+                </div>
+                <div class="output">
+                    <h5>📤 AI Generated with Research:</h5>
+                    <p><strong>Subject:</strong> Renewable Energy Investment Proposal</p>
+                    <p>Dear Investment Committee,</p>
+                    <p>I'm writing to propose an investment opportunity in the rapidly growing solar energy sector.</p>
+                    <p><strong>Market Context (Researched Insights):</strong></p>
+                    <ul>
+                        <li>The global solar energy market is projected to grow at 8.5% CAGR through 2028</li>
+                        <li>Recent technological advances have reduced solar panel costs by 40% in the past 3 years</li>
+                        <li>Government incentives and ESG mandates are driving unprecedented demand</li>
+                    </ul>
+                    <p>Based on current market trends and our analysis, I believe this presents a compelling investment opportunity with strong potential returns and positive environmental impact.</p>
+                    <p>I'd welcome the opportunity to present detailed projections at our next meeting.</p>
+                    <p>Best regards,<br>[Your Name]</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="demo-section">
+        <h2>📊 Sentiment Analysis Example</h2>
+        
+        <div class="example-card">
+            <h4>Incoming Email Analysis</h4>
+            <div class="input-output">
+                <div class="input">
+                    <h5>📥 Original Email:</h5>
+                    <p>"I'm extremely disappointed with the service quality. This is the third time we've had issues this month, and it's affecting our business operations. We need this resolved immediately or we'll have to consider other options."</p>
+                </div>
+                <div class="output">
+                    <h5>📊 AI Analysis Results:</h5>
+                    <p><strong>Sentiment:</strong> <span style="background: #f8d7da; color: #721c24; padding: 4px 8px; border-radius: 4px;">NEGATIVE</span></p>
+                    <p><strong>Emotional Tone:</strong> Frustrated and concerned</p>
+                    <p><strong>Urgency:</strong> <span style="background: #dc3545; color: white; padding: 4px 8px; border-radius: 4px;">HIGH</span></p>
+                    <p><strong>Priority Score:</strong> 9/10</p>
+                    <p><strong>Recommended Response Tone:</strong> Empathetic and Solution-focused</p>
+                    <p><strong>Key Points to Address:</strong></p>
+                    <ul>
+                        <li>Acknowledge the repeated issues and frustration</li>
+                        <li>Provide immediate action plan</li>
+                        <li>Offer compensation or gesture of goodwill</li>
+                        <li>Establish prevention measures</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="demo-section">
+        <h2>🌍 Multi-Language Examples</h2>
+        
+        <div class="example-card">
+            <h4>Same Email in Different Languages</h4>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 15px;">
+                <div class="input">
+                    <h5>🇺🇸 English</h5>
+                    <p>Dear Mr. Chen,<br>Thank you for your interest in our services. We would be delighted to schedule a consultation to discuss your requirements.</p>
+                </div>
+                <div class="input">
+                    <h5>🇪🇸 Spanish</h5>
+                    <p>Estimado Sr. Chen,<br>Gracias por su interés en nuestros servicios. Estaríamos encantados de programar una consulta para discutir sus requisitos.</p>
+                </div>
+                <div class="input">
+                    <h5>🇫🇷 French</h5>
+                    <p>Cher M. Chen,<br>Merci pour votre intérêt pour nos services. Nous serions ravis de programmer une consultation pour discuter de vos exigences.</p>
+                </div>
+                <div class="input">
+                    <h5>🇩🇪 German</h5>
+                    <p>Lieber Herr Chen,<br>Vielen Dank für Ihr Interesse an unseren Dienstleistungen. Wir würden gerne eine Beratung vereinbaren, um Ihre Anforderungen zu besprechen.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="demo-section">
+        <h2>🚀 Getting Started</h2>
+        <div style="text-align: center;">
+            <h3>Ready to revolutionize your email communication?</h3>
+            <p>MailMaster requires you to configure your own OpenAI and Tavily API keys for security. Simply enter your keys in the Settings tab and start generating professional emails with AI assistance.</p>
+            <a href="index.html" class="cta-button">Launch MailMaster</a>
+            <p style="margin-top: 20px; color: #666; font-size: 14px;">
+                <strong>Features included:</strong> AI Email Generation • Research Integration • Sentiment Analysis • Multi-language Support • Priority Detection • Smart Context Enhancement
+            </p>
+        </div>
+    </div>
+
+    <div class="demo-section" style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); border: 2px solid #dee2e6;">
+        <h2>💡 Pro Tips</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+            <div>
+                <h4>📝 For Better Emails</h4>
+                <ul>
+                    <li>Be specific with key points</li>
+                    <li>Choose appropriate tone</li>
+                    <li>Enable auto-research for complex topics</li>
+                    <li>Review before sending</li>
+                </ul>
+            </div>
+            <div>
+                <h4>🔍 For Research</h4>
+                <ul>
+                    <li>Use specific search queries</li>
+                    <li>Verify important information</li>
+                    <li>Integrate naturally into content</li>
+                    <li>Check provided sources</li>
+                </ul>
+            </div>
+            <div>
+                <h4>📊 For Sentiment Analysis</h4>
+                <ul>
+                    <li>Analyze before replying to important emails</li>
+                    <li>Match your tone to the analysis</li>
+                    <li>Address all key points identified</li>
+                    <li>Consider urgency and priority</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
