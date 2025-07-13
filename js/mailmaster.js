@@ -58,13 +58,29 @@ class MailMaster {
 
     validateApiKeys() {
         const statusElement = document.getElementById('api-status');
-        if (this.apiKeys.openai && this.apiKeys.tavily) {
+        const openaiValid = this.apiKeys.openai && this.apiKeys.openai.startsWith('sk-');
+        const tavilyValid = this.apiKeys.tavily && this.apiKeys.tavily.startsWith('tvly-');
+        
+        if (openaiValid && tavilyValid) {
             statusElement.textContent = '✅ Keys Configured';
             statusElement.style.color = '#28a745';
+        } else if (openaiValid || tavilyValid) {
+            statusElement.textContent = '⚠️ Partial Configuration';
+            statusElement.style.color = '#ffc107';
         } else {
             statusElement.textContent = '❌ Please configure API keys';
             statusElement.style.color = '#dc3545';
         }
+    }
+
+    // Validate API key format
+    validateApiKeyFormat(key, type) {
+        if (type === 'openai') {
+            return key.startsWith('sk-') && key.length > 20;
+        } else if (type === 'tavily') {
+            return key.startsWith('tvly-') && key.length > 20;
+        }
+        return false;
     }
 
     // OpenAI API Integration
@@ -605,11 +621,34 @@ Format as a complete email with subject line (Re: [original subject]).`;
     }
 
     saveApiKeys() {
-        this.apiKeys.openai = document.getElementById('openai-key').value;
-        this.apiKeys.tavily = document.getElementById('tavily-key').value;
+        const openaiKey = document.getElementById('openai-key').value.trim();
+        const tavilyKey = document.getElementById('tavily-key').value.trim();
+        
+        // Validate API key formats
+        if (openaiKey && !this.validateApiKeyFormat(openaiKey, 'openai')) {
+            this.showNotification('Invalid OpenAI API key format. Should start with "sk-"', 'error');
+            return;
+        }
+        
+        if (tavilyKey && !this.validateApiKeyFormat(tavilyKey, 'tavily')) {
+            this.showNotification('Invalid Tavily API key format. Should start with "tvly-"', 'error');
+            return;
+        }
+        
+        // Save keys
+        this.apiKeys.openai = openaiKey;
+        this.apiKeys.tavily = tavilyKey;
         localStorage.setItem('mailmaster_keys', JSON.stringify(this.apiKeys));
+        
         this.validateApiKeys();
-        this.showNotification('API keys saved successfully!', 'success');
+        
+        if (openaiKey && tavilyKey) {
+            this.showNotification('API keys saved successfully!', 'success');
+        } else if (openaiKey || tavilyKey) {
+            this.showNotification('API key saved. Configure the remaining key for full functionality.', 'success');
+        } else {
+            this.showNotification('API keys cleared.', 'success');
+        }
     }
 
     saveSettings() {
